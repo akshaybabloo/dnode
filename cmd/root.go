@@ -7,9 +7,9 @@ import (
 
 func NewRootCmd(appVersion, buildDate string) *cobra.Command {
 	var rootCmd = &cobra.Command{
-		Use: "dnode [OPTIONS] [COMMANDS]",
+		Use:   "dnode [OPTIONS] [COMMANDS]",
 		Short: "Tool to delete 'node_modules'",
-		Long: `dnode can be used to delete 'node_modules' recursively from sub-folders`,
+		Long:  `dnode can be used to delete 'node_modules' recursively from sub-folders`,
 		Example: heredoc.Doc(`
 			$ dnode list
 			$ dnode delete <directory path>

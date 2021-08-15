@@ -4,7 +4,7 @@ import "github.com/spf13/cobra"
 
 func NewDeleteCmd() *cobra.Command {
 	var deleteCmd = &cobra.Command{
-		Use: "delete",
+		Use:   "delete",
 		Short: "Delete all 'node_modules' folders",
 	}
 

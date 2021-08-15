@@ -17,7 +17,7 @@ var wd string
 
 func NewListCmd() *cobra.Command {
 	var listCmd = &cobra.Command{
-		Use: "list",
+		Use:   "list",
 		Short: "Lists out all 'node_modules' folders",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var err error
