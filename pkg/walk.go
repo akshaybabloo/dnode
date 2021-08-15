@@ -2,7 +2,6 @@ package pkg
 
 import (
 	"errors"
-	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -31,7 +30,6 @@ func ListDirStat(keyword string, dirPath string) ([]Directories, error) {
 
 	visit := func(path string, d fs.DirEntry, err error) error {
 		if d.IsDir() && d.Name() == keyword {
-			fmt.Println(path)
 			wg.Add(1)
 
 			go func(path string) {
