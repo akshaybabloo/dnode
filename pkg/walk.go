@@ -9,7 +9,7 @@ import (
 
 type Directories struct {
 	Path string
-	Size int
+	Size int64
 }
 
 // ListDirStat lists all the directories starting with the keyword in a given dirPath
