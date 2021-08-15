@@ -13,15 +13,19 @@ import (
 	"github.com/akshaybabloo/dnode/pkg"
 )
 
+var wd string
+
 func NewListCmd() *cobra.Command {
 	var listCmd = &cobra.Command{
 		Use: "list",
 		Short: "Lists out all 'node_modules' folders",
 		RunE: func(cmd *cobra.Command, args []string) error {
-
-			wd, err := os.Getwd()
-			if err != nil {
-				return err
+			var err error
+			if wd == "" {
+				wd, err = os.Getwd()
+				if err != nil {
+					return err
+				}
 			}
 
 			fmt.Printf("\r%s", color.GreenString("Searching..."))
@@ -53,6 +57,8 @@ func NewListCmd() *cobra.Command {
 			return nil
 		},
 	}
+
+	listCmd.Flags().StringVar(&wd, "path", "", "Search path")
 
 	return listCmd
 }
