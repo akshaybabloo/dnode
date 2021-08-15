@@ -50,8 +50,8 @@ func ListDirStat(keyword string, dirPath string) ([]Directories, error) {
 	}
 
 	go func() {
-		for i := range dirChan {
-			directories = append(directories, i)
+		for dirStat := range dirChan {
+			directories = append(directories, dirStat)
 			wg.Done()
 		}
 	}()
