@@ -48,6 +48,7 @@ func NewListCmd() *cobra.Command {
 				table.Append([]string{strings.ReplaceAll(stat.Path, wd, "."), humanize.Bytes(uint64(stat.Size))})
 				totalSize += stat.Size
 			}
+			table.SetColumnAlignment([]int{tablewriter.ALIGN_LEFT, tablewriter.ALIGN_CENTER})
 			table.SetHeader([]string{"Path", "Directory Size"})
 			table.SetFooter([]string{"Total", humanize.Bytes(uint64(totalSize))})
 			table.SetAutoMergeCellsByColumnIndex([]int{2, 3})
