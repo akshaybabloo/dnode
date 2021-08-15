@@ -3,6 +3,9 @@ package cmd
 import (
 	"github.com/MakeNowJust/heredoc"
 	"github.com/spf13/cobra"
+
+	delete2 "github.com/akshaybabloo/dnode/cmd/delete"
+	"github.com/akshaybabloo/dnode/cmd/list"
 )
 
 func NewRootCmd(appVersion, buildDate string) *cobra.Command {
@@ -17,8 +20,7 @@ func NewRootCmd(appVersion, buildDate string) *cobra.Command {
 		`),
 	}
 
-	rootCmd.AddCommand(NewListCmd())
-	rootCmd.AddCommand(NewDeleteCmd())
-
+	rootCmd.AddCommand(list.NewListCmd())
+	rootCmd.AddCommand(delete2.NewDeleteCmd())
 	return rootCmd
 }
