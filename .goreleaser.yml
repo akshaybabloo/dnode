@@ -1,0 +1,53 @@
+project_name: dnode
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags: -s -w -X main.buildDate={{.Date}}
+archives:
+  - replacements:
+      darwin: macOS
+      linux: Linux
+      windows: Windows
+      amd64: 64bit
+    name_template: "{{.ProjectName}}_{{.Version}}_{{.Os}}-{{.Arch}}"
+    files:
+      - README.md
+      - LICENSE
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+nfpms:
+  - id: "dnode"
+    builds: [ 'dnode' ]
+    formats:
+      - deb
+      - rpm
+    vendor: "gollahalli.com"
+    homepage: "https://github.com/akshaybabloo/dnode"
+    maintainer: "Akshay Raj Gollahalli <akshay@gollahalli.com>"
+    description: "Search and delete node_modules folders"
+    license: "MIT"
+    file_name_template: "{{.ProjectName}}_{{.Version}}_{{.Os}}-{{.Arch}}"
+    replacements:
+      darwin: macOS
+      linux: Linux
+      windows: Windows
+      amd64: 64bit
