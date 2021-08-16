@@ -3,14 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/akshaybabloo/dnode/cmd"
 )
 
 var (
-	version   = "0.0.1-dev"
-	buildDate = time.Now().String()
+	version   = "1.0.0"
+	buildDate = ""
 )
 
 func main() {
