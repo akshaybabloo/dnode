@@ -35,5 +35,5 @@ func NewRootCmd(appVersion, buildDate string) *cobra.Command {
 }
 
 func format(version, buildDate string) string {
-	return fmt.Sprintf("%s %s\n", version, buildDate)
+	return fmt.Sprintf("dnode %s %s\n", version, buildDate)
 }
