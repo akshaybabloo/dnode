@@ -15,6 +15,7 @@ import (
 
 var wd string
 
+// NewListCmd command function to list all node_modules folders
 func NewListCmd() *cobra.Command {
 	var listCmd = &cobra.Command{
 		Use:   "list",

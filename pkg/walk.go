@@ -10,12 +10,14 @@ import (
 
 var wg sync.WaitGroup
 
+// Directories holds the Path and Size of a given directory
 type Directories struct {
-	Path string
-	Size int64
+	Path string // Absolute Path of a folder
+	Size int64  // Size in bytes
 }
 
 // ListDirStat lists all the directories starting with the keyword in a given dirPath
+// and shows its absolute Directories.Path and total Directories.Size in bytes
 func ListDirStat(keyword string, dirPath string) ([]Directories, error) {
 	pathStat, err := os.Stat(dirPath)
 	if err != nil {

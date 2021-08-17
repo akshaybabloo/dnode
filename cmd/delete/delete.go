@@ -14,6 +14,7 @@ import (
 
 var wd string
 
+// NewDeleteCmd command function to delete node_modules folders
 func NewDeleteCmd() *cobra.Command {
 	var deleteCmd = &cobra.Command{
 		Use:   "delete",

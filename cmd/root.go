@@ -10,6 +10,7 @@ import (
 	"github.com/akshaybabloo/dnode/cmd/list"
 )
 
+// NewRootCmd root command
 func NewRootCmd(appVersion, buildDate string) *cobra.Command {
 	var rootCmd = &cobra.Command{
 		Use:   "dnode [OPTIONS] [COMMANDS]",
