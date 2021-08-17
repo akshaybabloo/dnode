@@ -3,12 +3,12 @@
 `dnode` is a CLI tool to search and delete any `node_module` folders.
 
 - [1. Instillation](#1-instillation)
-  - [1.1. Via Go CLI](#11-via-go-cli)
-  - [1.2. Build it yourself](#12-build-it-yourself)
-  - [1.3. Download prebuilt binaries](#13-download-prebuilt-binaries)
+    - [1.1. Via Go CLI](#11-via-go-cli)
+    - [1.2. Build it yourself](#12-build-it-yourself)
+    - [1.3. Download prebuilt binaries](#13-download-prebuilt-binaries)
 - [2. Usage](#2-usage)
-  - [2.1. list](#21-list)
-  - [2.2. delete](#22-delete)
+    - [2.1. list](#21-list)
+    - [2.2. delete](#22-delete)
 
 ## 1. Instillation
 
@@ -25,7 +25,7 @@ go install github.com/akshaybabloo/dnode@latest
 ### 1.2. Build it yourself
 
 ```bash
-git clone github.com/akshaybabloo/dnode
+git clone github.com/akshaybabloo/dnode.git
 cd dnode
 go install
 ```
