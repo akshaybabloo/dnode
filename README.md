@@ -1,5 +1,7 @@
 # dnode
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/akshaybabloo/dnode.svg)](https://pkg.go.dev/github.com/akshaybabloo/dnode)
+
 `dnode` is a CLI tool to search and delete any `node_module` folders.
 
 - [1. Instillation](#1-instillation)
