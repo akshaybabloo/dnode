@@ -1,10 +1,11 @@
 package list
 
 import (
-	"fmt"
 	"os"
 	"strings"
+	"time"
 
+	"github.com/briandowns/spinner"
 	"github.com/dustin/go-humanize"
 	"github.com/fatih/color"
 	"github.com/olekukonko/tablewriter"
@@ -29,18 +30,19 @@ func NewListCmd() *cobra.Command {
 				}
 			}
 
-			fmt.Printf("\r%s", color.GreenString("Searching..."))
+			s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
+			s.Suffix = color.GreenString(" Searching...")
+			s.Start()
 			dirStats, err := pkg.ListDirStat("node_modules", wd)
 			if err != nil {
 				return err
 			}
 
 			if len(dirStats) == 0 {
-				fmt.Printf("\r")
-				color.Red("No 'node_modules' found")
+				s.FinalMSG = color.RedString("No 'node_modules' found")
+				s.Stop()
 				return nil
 			}
-			fmt.Printf("\r")
 
 			var totalSize int64 = 0
 
@@ -55,6 +57,7 @@ func NewListCmd() *cobra.Command {
 			table.SetAutoMergeCellsByColumnIndex([]int{2, 3})
 			table.SetBorder(false)
 			table.Render()
+			s.Stop()
 
 			return nil
 		},

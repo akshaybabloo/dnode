@@ -1,9 +1,10 @@
 module github.com/akshaybabloo/dnode
 
-go 1.17
+go 1.20
 
 require (
 	github.com/MakeNowJust/heredoc v1.0.0
+	github.com/briandowns/spinner v1.23.0
 	github.com/dustin/go-humanize v1.0.1
 	github.com/fatih/color v1.15.0
 	github.com/olekukonko/tablewriter v0.0.5
@@ -17,4 +18,5 @@ require (
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/term v0.1.0 // indirect
 )
