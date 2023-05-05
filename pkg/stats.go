@@ -9,6 +9,7 @@ import (
 	"github.com/jedib0t/go-pretty/v6/text"
 )
 
+// PrintDirStats prints the directory stats
 func PrintDirStats(dirStats []Directories, wd string) int64 {
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
