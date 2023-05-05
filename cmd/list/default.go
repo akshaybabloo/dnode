@@ -2,13 +2,10 @@ package list
 
 import (
 	"os"
-	"strings"
 	"time"
 
 	"github.com/briandowns/spinner"
-	"github.com/dustin/go-humanize"
 	"github.com/fatih/color"
-	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 
 	"github.com/akshaybabloo/dnode/pkg"
@@ -45,19 +42,7 @@ func NewListCmd() *cobra.Command {
 			}
 			s.Stop()
 
-			var totalSize int64 = 0
-
-			table := tablewriter.NewWriter(os.Stdout)
-			for _, stat := range dirStats {
-				table.Append([]string{strings.ReplaceAll(stat.Path, wd, "."), humanize.Bytes(uint64(stat.Size))})
-				totalSize += stat.Size
-			}
-			table.SetColumnAlignment([]int{tablewriter.ALIGN_LEFT, tablewriter.ALIGN_CENTER})
-			table.SetHeader([]string{"Path", "Directory Size"})
-			table.SetFooter([]string{"Total", humanize.Bytes(uint64(totalSize))})
-			table.SetAutoMergeCellsByColumnIndex([]int{2, 3})
-			table.SetBorder(false)
-			table.Render()
+			_ = pkg.PrintDirStats(dirStats, wd)
 
 			return nil
 		},

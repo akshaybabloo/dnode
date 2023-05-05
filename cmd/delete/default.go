@@ -1,6 +1,7 @@
 package delete
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"strings"
@@ -9,7 +10,7 @@ import (
 	"github.com/briandowns/spinner"
 	"github.com/dustin/go-humanize"
 	"github.com/fatih/color"
-	"github.com/olekukonko/tablewriter"
+	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
 
 	"github.com/akshaybabloo/dnode/pkg"
@@ -19,23 +20,26 @@ var wd string
 var yes bool
 
 func askForConfirmation() bool {
-	var response string
-	fmt.Print(color.GreenString("Are you sure? (y/n): "))
-	// TODO: user readstring("\n") instead of scanln
-	_, err := fmt.Scanln(&response)
-	if err != nil {
-		// empty new line should be ignored
-		return askForConfirmation()
-	}
+	reader := bufio.NewReader(os.Stdin)
 
-	switch strings.ToLower(response) {
-	case "y", "yes":
-		return true
-	case "n", "no":
-		return false
-	default:
-		fmt.Println("I'm sorry but I didn't get what you meant, please type (y)es or (n)o and then press enter:")
-		return askForConfirmation()
+	for {
+		fmt.Print(color.GreenString("Are you sure? (y/n): "))
+		input, err := reader.ReadString('\n')
+
+		if err != nil {
+			fmt.Println("Error reading input:", err)
+			continue
+		}
+
+		input = strings.ToLower(strings.TrimSpace(input))
+		switch input {
+		case "y", "yes":
+			return true
+		case "n", "no":
+			return false
+		default:
+			fmt.Println("Invalid input. Please try again.")
+		}
 	}
 }
 
@@ -68,19 +72,7 @@ func NewDeleteCmd() *cobra.Command {
 			}
 			s.Stop()
 
-			var totalSize int64 = 0
-
-			table := tablewriter.NewWriter(os.Stdout)
-			for _, stat := range dirStats {
-				table.Append([]string{strings.ReplaceAll(stat.Path, wd, "."), humanize.Bytes(uint64(stat.Size))})
-				totalSize += stat.Size
-			}
-			table.SetColumnAlignment([]int{tablewriter.ALIGN_LEFT, tablewriter.ALIGN_CENTER})
-			table.SetHeader([]string{"Path", "Directory Size"})
-			table.SetFooter([]string{"Total", humanize.Bytes(uint64(totalSize))})
-			table.SetAutoMergeCellsByColumnIndex([]int{2, 3})
-			table.SetBorder(false)
-			table.Render()
+			totalSize := pkg.PrintDirStats(dirStats, wd)
 			fmt.Println()
 
 			if !yes {
@@ -92,18 +84,17 @@ func NewDeleteCmd() *cobra.Command {
 			fmt.Println()
 
 			s.Start()
+			var multiErr *multierror.Error
 			for _, stat := range dirStats {
-				err := os.RemoveAll(stat.Path)
-				if err != nil {
-					return err
+				s.Suffix = color.GreenString(" Deleting %s", strings.ReplaceAll(stat.Path, wd, "."))
+				if err := os.RemoveAll(stat.Path); err != nil {
+					multiErr = multierror.Append(multiErr, err)
 				}
-				s.Suffix = color.GreenString("Deleted %s", strings.ReplaceAll(stat.Path, wd, "."))
 			}
+			s.FinalMSG = color.GreenString("%s freed", humanize.Bytes(uint64(totalSize)))
 			s.Stop()
 
-			color.Green("%s freed", humanize.Bytes(uint64(totalSize)))
-
-			return nil
+			return multiErr.ErrorOrNil()
 		},
 	}
 
