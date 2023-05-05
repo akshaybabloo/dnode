@@ -1,7 +1,6 @@
-package delete
+package list
 
 import (
-	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -9,6 +8,7 @@ import (
 	"github.com/briandowns/spinner"
 	"github.com/dustin/go-humanize"
 	"github.com/fatih/color"
+	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 
 	"github.com/akshaybabloo/dnode/pkg"
@@ -16,11 +16,11 @@ import (
 
 var wd string
 
-// NewDeleteCmd command function to delete node_modules folders
-func NewDeleteCmd() *cobra.Command {
-	var deleteCmd = &cobra.Command{
-		Use:   "delete",
-		Short: "Delete all 'node_modules' folders",
+// NewListCmd command function to list all node_modules folders
+func NewListCmd() *cobra.Command {
+	var listCmd = &cobra.Command{
+		Use:   "list",
+		Short: "Lists out all 'node_modules' folders",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var err error
 			if wd == "" {
@@ -47,22 +47,23 @@ func NewDeleteCmd() *cobra.Command {
 
 			var totalSize int64 = 0
 
+			table := tablewriter.NewWriter(os.Stdout)
 			for _, stat := range dirStats {
-				err := os.RemoveAll(stat.Path)
-				if err != nil {
-					return err
-				}
-				fmt.Printf("Deleted %s\n", strings.ReplaceAll(stat.Path, wd, "."))
+				table.Append([]string{strings.ReplaceAll(stat.Path, wd, "."), humanize.Bytes(uint64(stat.Size))})
 				totalSize += stat.Size
 			}
-
-			color.Green("%s freed", humanize.Bytes(uint64(totalSize)))
+			table.SetColumnAlignment([]int{tablewriter.ALIGN_LEFT, tablewriter.ALIGN_CENTER})
+			table.SetHeader([]string{"Path", "Directory Size"})
+			table.SetFooter([]string{"Total", humanize.Bytes(uint64(totalSize))})
+			table.SetAutoMergeCellsByColumnIndex([]int{2, 3})
+			table.SetBorder(false)
+			table.Render()
 
 			return nil
 		},
 	}
 
-	deleteCmd.Flags().StringVar(&wd, "path", "", "Search path")
+	listCmd.Flags().StringVar(&wd, "path", "", "Search path")
 
-	return deleteCmd
+	return listCmd
 }
