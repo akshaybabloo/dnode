@@ -6,12 +6,13 @@ import (
 	"os"
 	"testing"
 
+	walk "github.com/akshaybabloo/go-walk"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPrintDirStats(t *testing.T) {
 	// Create a sample Directories slice
-	dirStats := []Directories{
+	dirStats := []walk.DirectoryInfo{
 		{Path: "/tmp/test1/node_modules", Size: 1024},
 		{Path: "/tmp/test2/node_modules", Size: 2048},
 	}
