@@ -4,13 +4,14 @@ import (
 	"os"
 	"strings"
 
+	walk "github.com/akshaybabloo/go-walk"
 	"github.com/dustin/go-humanize"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 )
 
 // PrintDirStats prints the directory stats
-func PrintDirStats(dirStats []Directories, wd string) int64 {
+func PrintDirStats(dirStats []walk.DirectoryInfo, wd string) int64 {
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
 

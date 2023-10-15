@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/akshaybabloo/dnode/pkg"
+	walk "github.com/akshaybabloo/go-walk"
 )
 
 var wd string
@@ -30,7 +31,7 @@ func NewListCmd() *cobra.Command {
 			s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
 			s.Suffix = color.GreenString(" Searching...")
 			s.Start()
-			dirStats, err := pkg.ListDirStat("node_modules", wd)
+			dirStats, err := walk.ListDirStat(wd, "node_modules")
 			if err != nil {
 				return err
 			}
