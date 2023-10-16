@@ -1,7 +1,7 @@
 github.com/MakeNowJust/heredoc v1.0.0 h1:cXCdzVdstXyiTqTvfqk9SDHpKNjxuom+DOlyEeQ4pzQ=
 github.com/MakeNowJust/heredoc v1.0.0/go.mod h1:mG5amYoWBHf8vpLOuehzbGGw0EHxpZZ6lCpQ4fNJ8LE=
-github.com/akshaybabloo/go-walk v1.0.0 h1:8ve5dXZgvqHJYZLaNceibFVtDfTEVvO7B7JipMQ9E88=
-github.com/akshaybabloo/go-walk v1.0.0/go.mod h1:oz1Lmls0Ok5PV7IXtj0QbGq6VUNNB8POC40JRRANlwc=
+github.com/akshaybabloo/go-walk v1.0.1 h1:Fnd904XAh9Q91ZNcuGnHX9xdmmot6RBNZmlp2rwr7ss=
+github.com/akshaybabloo/go-walk v1.0.1/go.mod h1:oz1Lmls0Ok5PV7IXtj0QbGq6VUNNB8POC40JRRANlwc=
 github.com/briandowns/spinner v1.23.0 h1:alDF2guRWqa/FOZZYWjlMIx2L6H0wyewPxo/CH4Pt2A=
 github.com/briandowns/spinner v1.23.0/go.mod h1:rPG4gmXeN3wQV/TsAY4w8lPdIM6RX3yqeBQJSrbXjuE=
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
