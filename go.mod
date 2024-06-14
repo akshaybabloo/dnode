@@ -1,7 +1,7 @@
 module github.com/akshaybabloo/dnode
 
 go 1.21
-toolchain go1.22.1
+toolchain go1.22.4
 
 require (
 	github.com/MakeNowJust/heredoc v1.0.0
@@ -11,7 +11,7 @@ require (
 	github.com/fatih/color v1.16.0
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/jedib0t/go-pretty/v6 v6.5.5
-	github.com/spf13/cobra v1.8.0
+	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
 )
 
