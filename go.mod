@@ -7,7 +7,7 @@ toolchain go1.22.6
 require (
 	github.com/MakeNowJust/heredoc v1.0.0
 	github.com/akshaybabloo/go-walk v1.2.0
-	github.com/briandowns/spinner v1.23.0
+	github.com/briandowns/spinner v1.23.1
 	github.com/dustin/go-humanize v1.0.1
 	github.com/fatih/color v1.16.0
 	github.com/hashicorp/go-multierror v1.1.1
