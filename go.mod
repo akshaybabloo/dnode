@@ -11,7 +11,7 @@ require (
 	github.com/dustin/go-humanize v1.0.1
 	github.com/fatih/color v1.17.0
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/jedib0t/go-pretty/v6 v6.6.0
+	github.com/jedib0t/go-pretty/v6 v6.6.1
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
 )
