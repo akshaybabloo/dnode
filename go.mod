@@ -1,8 +1,6 @@
 module github.com/akshaybabloo/dnode
 
-go 1.22
-
-toolchain go1.22.6
+go 1.23
 
 require (
 	github.com/MakeNowJust/heredoc v1.0.0
