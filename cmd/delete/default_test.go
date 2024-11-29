@@ -1,4 +1,4 @@
-package delete
+package deletecmd
 
 import (
 	"os"
@@ -24,8 +24,8 @@ func TestNewDeleteCmd(t *testing.T) {
 
 	// Set up the Cobra command and flags
 	deleteCmd := NewDeleteCmd()
-	wd = tmpDir
-	yes = true
+	workingDir = tmpDir
+	confirmDeletion = true
 
 	// Call Execute
 	err = deleteCmd.Execute()

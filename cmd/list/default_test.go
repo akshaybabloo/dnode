@@ -1,4 +1,4 @@
-package list
+package listcmd
 
 import (
 	"bytes"
@@ -27,7 +27,7 @@ func TestNewListCmd(t *testing.T) {
 
 	// Set up the Cobra command and flags
 	listCmd := NewListCmd()
-	wd = tmpDir
+	workingDir = tmpDir
 
 	// Redirect os.Stdout to a pipe
 	oldStdout := os.Stdout

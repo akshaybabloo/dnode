@@ -11,6 +11,10 @@ import (
 )
 
 // PrintDirStats prints the directory stats
+// - dirStats: a slice of DirectoryInfo containing directory statistics
+// - wd: the working directory path to be replaced with "."
+// Returns:
+// - totalSize: the total size of all directories in bytes
 func PrintDirStats(dirStats []walk.DirectoryInfo, wd string) int64 {
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
@@ -18,7 +22,7 @@ func PrintDirStats(dirStats []walk.DirectoryInfo, wd string) int64 {
 	t.AppendHeader(table.Row{"Path", "Directory Size"})
 	var totalSize int64
 	for _, stat := range dirStats {
-		t.AppendRow([]interface{}{
+		t.AppendRow(table.Row{
 			strings.ReplaceAll(stat.Path, wd, "."),
 			humanize.Bytes(uint64(stat.Size)),
 		})

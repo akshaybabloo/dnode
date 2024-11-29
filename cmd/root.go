@@ -6,8 +6,8 @@ import (
 	"github.com/MakeNowJust/heredoc"
 	"github.com/spf13/cobra"
 
-	delete2 "github.com/akshaybabloo/dnode/cmd/delete"
-	"github.com/akshaybabloo/dnode/cmd/list"
+	deletecmd "github.com/akshaybabloo/dnode/cmd/delete"
+	listcmd "github.com/akshaybabloo/dnode/cmd/list"
 )
 
 // NewRootCmd root command
@@ -23,8 +23,8 @@ func NewRootCmd(appVersion, buildDate string) *cobra.Command {
 		`),
 	}
 
-	rootCmd.AddCommand(list.NewListCmd())
-	rootCmd.AddCommand(delete2.NewDeleteCmd())
+	rootCmd.AddCommand(listcmd.NewListCmd())
+	rootCmd.AddCommand(deletecmd.NewDeleteCmd())
 
 	formattedVersion := format(appVersion, buildDate)
 	rootCmd.SetVersionTemplate(formattedVersion)

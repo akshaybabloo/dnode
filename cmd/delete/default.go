@@ -1,4 +1,4 @@
-package delete
+package deletecmd
 
 import (
 	"bufio"
@@ -17,8 +17,13 @@ import (
 	walk "github.com/akshaybabloo/go-walk"
 )
 
-var wd string
-var yes bool
+const (
+	spinnerCharSet = 11
+	spinnerDelay   = 100 * time.Millisecond
+)
+
+var workingDir string
+var confirmDeletion bool
 
 func askForConfirmation() bool {
 	reader := bufio.NewReader(os.Stdin)
@@ -28,7 +33,7 @@ func askForConfirmation() bool {
 		input, err := reader.ReadString('\n')
 
 		if err != nil {
-			fmt.Println("Error reading input:", err)
+			fmt.Println("error reading input:", err)
 			continue
 		}
 
@@ -44,39 +49,39 @@ func askForConfirmation() bool {
 	}
 }
 
-// NewDeleteCmd command function to delete node_modules folders
+// NewDeleteCmd creates a new command to delete node_modules folders
 func NewDeleteCmd() *cobra.Command {
-	var deleteCmd = &cobra.Command{
+	var cmd = &cobra.Command{
 		Use:   "delete",
 		Short: "Delete all 'node_modules' folders",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var err error
-			if wd == "" {
-				wd, err = os.Getwd()
+			if workingDir == "" {
+				workingDir, err = os.Getwd()
 				if err != nil {
 					return err
 				}
 			}
 
-			s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
+			s := spinner.New(spinner.CharSets[spinnerCharSet], spinnerDelay)
 			s.Suffix = color.GreenString(" Searching...")
 			s.Start()
-			dirStats, err := walk.ListDirStat(wd, "node_modules")
+			dirStats, err := walk.ListDirStat(workingDir, "node_modules")
 			if err != nil {
 				return err
 			}
 
 			if len(dirStats) == 0 {
-				s.FinalMSG = color.RedString("No 'node_modules' found")
+				s.FinalMSG = color.RedString("No 'node_modules' found\n")
 				s.Stop()
 				return nil
 			}
 			s.Stop()
 
-			totalSize := pkg.PrintDirStats(dirStats, wd)
+			totalSize := pkg.PrintDirStats(dirStats, workingDir)
 			fmt.Println()
 
-			if !yes {
+			if !confirmDeletion {
 				answer := askForConfirmation()
 				if !answer {
 					return nil
@@ -86,21 +91,24 @@ func NewDeleteCmd() *cobra.Command {
 
 			s.Start()
 			var multiErr *multierror.Error
-			for _, stat := range dirStats {
-				s.Suffix = color.GreenString(" Deleting %s", strings.ReplaceAll(stat.Path, wd, "."))
-				if err := os.RemoveAll(stat.Path); err != nil {
+			for _, dirStat := range dirStats {
+				s.Suffix = color.GreenString(" Deleting %s", strings.ReplaceAll(dirStat.Path, workingDir, "."))
+				if err := os.RemoveAll(dirStat.Path); err != nil {
 					multiErr = multierror.Append(multiErr, err)
 				}
 			}
 			s.FinalMSG = color.GreenString("%s freed", humanize.Bytes(uint64(totalSize)))
 			s.Stop()
 
-			return multiErr.ErrorOrNil()
+			if multiErr != nil {
+				return multiErr.ErrorOrNil()
+			}
+			return nil
 		},
 	}
 
-	deleteCmd.Flags().StringVar(&wd, "path", "", "Search path")
-	deleteCmd.Flags().BoolVar(&yes, "yes", false, "Delete without confirmation")
+	cmd.Flags().StringVar(&workingDir, "path", "", "Path to search for 'node_modules' folders")
+	cmd.Flags().BoolVar(&confirmDeletion, "yes", false, "Automatically confirm deletion without prompting")
 
-	return deleteCmd
+	return cmd
 }

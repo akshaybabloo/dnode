@@ -1,4 +1,4 @@
-package list
+package listcmd
 
 import (
 	"os"
@@ -12,7 +12,7 @@ import (
 	walk "github.com/akshaybabloo/go-walk"
 )
 
-var wd string
+var workingDir string
 
 // NewListCmd command function to list all node_modules folders
 func NewListCmd() *cobra.Command {
@@ -21,8 +21,8 @@ func NewListCmd() *cobra.Command {
 		Short: "Lists out all 'node_modules' folders",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var err error
-			if wd == "" {
-				wd, err = os.Getwd()
+			if workingDir == "" {
+				workingDir, err = os.Getwd()
 				if err != nil {
 					return err
 				}
@@ -31,7 +31,7 @@ func NewListCmd() *cobra.Command {
 			s := spinner.New(spinner.CharSets[11], 100*time.Millisecond)
 			s.Suffix = color.GreenString(" Searching...")
 			s.Start()
-			dirStats, err := walk.ListDirStat(wd, "node_modules")
+			dirStats, err := walk.ListDirStat(workingDir, "node_modules")
 			if err != nil {
 				return err
 			}
@@ -43,13 +43,13 @@ func NewListCmd() *cobra.Command {
 			}
 			s.Stop()
 
-			_ = pkg.PrintDirStats(dirStats, wd)
+			_ = pkg.PrintDirStats(dirStats, workingDir)
 
 			return nil
 		},
 	}
 
-	listCmd.Flags().StringVar(&wd, "path", "", "Search path")
+	listCmd.Flags().StringVar(&workingDir, "path", "", "Path to search for 'node_modules' folders")
 
 	return listCmd
 }
