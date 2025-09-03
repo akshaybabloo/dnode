@@ -4,7 +4,7 @@ import (
 	"os"
 	"strings"
 
-	walk "github.com/akshaybabloo/go-walk"
+	walk "github.com/akshaybabloo/go-walk/v2"
 	"github.com/dustin/go-humanize"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"

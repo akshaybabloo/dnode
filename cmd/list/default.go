@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/akshaybabloo/dnode/pkg"
-	walk "github.com/akshaybabloo/go-walk"
+	walk "github.com/akshaybabloo/go-walk/v2"
 )
 
 var workingDir string

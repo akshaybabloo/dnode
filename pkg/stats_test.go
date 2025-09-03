@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	walk "github.com/akshaybabloo/go-walk"
+	walk "github.com/akshaybabloo/go-walk/v2"
 	"github.com/stretchr/testify/assert"
 )
 
